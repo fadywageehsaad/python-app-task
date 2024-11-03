@@ -14,7 +14,7 @@ jobs:
 
     env:
       ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-      ECR_REPOSITORY: my-python-app
+      ECR_REPOSITORY: my-ecr-repo
       IMAGE_TAG: ${{ github.sha }}
 
     steps:

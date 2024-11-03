@@ -1,0 +1,138 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+
+# Pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# pyenv
+.python-version
+
+# Mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Pytest cache
+.pytest_cache/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Logs and temp files
+*.log
+*.out
+*.tmp
+*.temp
+*.pid
+*.swp
+
+# VS Code settings
+.vscode/
+*.code-workspace
+
+# Python IDEs
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Docker
+*.log
+docker-compose.override.yml
+docker-compose.prod.yml
+docker-compose.test.yml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# GitHub
+*.yaml
+*.yml
+
+# Environment variables
+.env
+.env.*
+
+# Local development overrides
+.local.env
+
+# Miscellaneous
+*.bak
+*.orig
+*.rej
+
+# Terraform
+.terraform/                 # Terraform working directory
+*.tfstate                   # Terraform state files
+*.tfstate.*                 # Backup Terraform state files
+crash.log                   # Terraform crash log
+*.tfvars                    # Terraform variable files (may contain sensitive data)
+*.tfvars.json
+override.tf                 # Local Terraform override files
+override.tf.json
+terraform.tfstate.backup    # Backup state file
+terraform.tfplan            # Terraform plan output
+.terraform.lock.hcl         # Terraform dependency lock file
+
+# Helm
+.helm/                      # Helm working directory
+charts/                     # Local Helm charts
+templates/                  # Helm templates folder
+*.release                   # Helm release history files
+*.tgz                       # Packaged Helm charts
+values.yaml                 # Helm values file (customize if sensitive)
+values-*.yaml               # Custom Helm values files
+secrets.yaml                # Helm secrets (customize if sensitive)
+releases/                   # Local Helm release files
+helmfile.yaml.lock          # Helmfile lock file
+
+# Kubeconfig
+.kube/config                # Kubeconfig for Kubernetes (if local and sensitive)
+
+# Miscellaneous
+*.bak
+*.orig
+*.rej

@@ -1,30 +1,27 @@
-variable "cluster_name" {
+variable "cidr_block" {
     description = "the name of your cluster"
     type        = string
-}
-
-variable "cluster_role_arn" {
-    description = "role arn to be attached to the created cluster"
-    type        = string
-}
-
-variable "node_role_arn" {
-    description = "role arn to be attached to the created nodes"
-    type        = string
-}
-
-variable "vpc_id" {
-    description = "VPC ID"
-    type        = string
-}
-
-variable "subnet_ids" {
-    description = "List of subnet IDs"
-    type        = list(string)
-    default     = []
 }
 
 variable "subnet_count" {
     description = "how many subnets to be deplpyed"
     type        = number
+}
+
+variable "enable_dns_support" {
+    description = "Enable dns support"
+    type        = bool
+    default     = true 
+}
+
+variable "enable_dns_hostnames" {
+  description = "Enable dns Hostname"
+  type        = bool
+  default     = true
+}
+
+variable "auto_assign" {
+  description = "Enable auto assign public Ip"
+  type = bool
+  default = true
 }
