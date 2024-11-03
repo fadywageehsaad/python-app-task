@@ -64,6 +64,6 @@ jobs:
     - name: Helm install or upgrade
       run: |
         pwd
-        helm upgrade --install my-python-app ../../helm/my-python-app \
+        helm upgrade --install my-python-app ./helm \
           --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY \
           --set image.tag=$IMAGE_TAG
