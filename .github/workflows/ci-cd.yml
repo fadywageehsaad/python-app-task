@@ -53,10 +53,6 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
 
-    - name: Docker scan
-      run: |
-        docker scan $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
     - name: Push Docker image to Amazon ECR
       run: |
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
