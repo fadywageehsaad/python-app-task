@@ -25,3 +25,8 @@ variable "auto_assign" {
   type = bool
   default = true
 }
+
+variable "eks_cluster_name" {
+    description = "EKS cluster name to be added as a tags in the subnets"
+    type        = string
+}

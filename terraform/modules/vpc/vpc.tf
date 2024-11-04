@@ -41,5 +41,10 @@ resource "aws_subnet" "eks_subnet" {
   cidr_block              = cidrsubnet(aws_vpc.eks_vpc.cidr_block, 8, count.index)
   availability_zone       = element(data.aws_availability_zones.available.names, count.index)
   map_public_ip_on_launch = var.auto_assign
+
+  tags = {
+    "kubernetes.io/role/elb" = 1
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "owned"
+  }
 }
 
