@@ -88,10 +88,6 @@ docker-compose.test.yml
 Thumbs.db
 ehthumbs.db
 
-# GitHub
-*.yaml
-*.yml
-
 # Environment variables
 .env
 .env.*
@@ -120,7 +116,6 @@ terraform.tfplan            # Terraform plan output
 # Helm
 .helm/                      # Helm working directory
 charts/                     # Local Helm charts
-templates/                  # Helm templates folder
 *.release                   # Helm release history files
 *.tgz                       # Packaged Helm charts
 values.yaml                 # Helm values file (customize if sensitive)
