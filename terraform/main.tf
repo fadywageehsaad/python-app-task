@@ -3,10 +3,11 @@ provider "aws" {
 }
 
 module "vpc" {
-  source       = "./modules/vpc"
+  source = "./modules/vpc"
 
-  cidr_block   = "10.0.0.0/16"
-  subnet_count = 2
+  cidr_block       = "10.0.0.0/16"
+  subnet_count     = 2
+  eks_cluster_name = "my-eks-cluster"
 }
 
 module "ecr" {
