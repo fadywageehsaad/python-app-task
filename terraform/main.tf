@@ -1,53 +1,54 @@
-provider "aws" {
-  region = "us-east-1"
+provider "azurerm" {
+  features {}
 }
 
-module "vpc" {
-  source = "./modules/vpc"
-
-  cidr_block       = "10.0.0.0/16"
-  subnet_count     = 2
-  eks_cluster_name = "my-eks-cluster"
+module "resource_group" {
+  source = "./modules/resource_group"
+  name   = "example-resources"
+  location = "West Europe"
 }
 
-module "ecr" {
-  source = "./modules/ecr"
-  repository_name = "my-ecr-repo"
+module "virtual_network" {
+  source              = "./modules/virtual_network"
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+  vnet_name           = "example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  subnet_name         = "example-subnet"
+  subnet_prefixes     = ["10.0.1.0/24"]
 }
 
-module "iam" {
-  source = "./modules/iam"
+module "container_registry" {
+  source              = "./modules/container_registry"
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+  acr_name            = "exampleacr"
+  sku                 = "Basic"
 }
 
-module "eks" {
-  source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0"
+module "app_service" {
+  source              = "./modules/app_service"
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+  app_service_plan_name = "example-appserviceplan"
+  app_service_name    = "example-appservice"
+  container_image     = "${module.container_registry.login_server}/nginx:latest"
+  application_insights_key = module.application_insights.instrumentation_key
+}
 
-  cluster_name    = "my-eks-cluster"
-  cluster_version = "1.31"
+module "application_gateway" {
+  source              = "./modules/application_gateway"
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+  subnet_id           = module.virtual_network.subnet_id
+  public_ip_name      = "example-pip"
+  app_gateway_name    = "example-appgateway"
+  zones               = ["1", "2", "3"]
+}
 
-  # EKS Addons
-  cluster_addons = {
-    coredns                = {}
-    eks-pod-identity-agent = {}
-    kube-proxy             = {}
-    vpc-cni                = {}
-  }
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.subnet_ids
-  cluster_endpoint_private_access = false
-  cluster_endpoint_public_access  = true
-
-  enable_cluster_creator_admin_permissions = true
-
-  eks_managed_node_groups = {
-    example = {
-      instance_types = ["m3.medium"]
-
-      min_size = 2
-      max_size = 5
-      desired_size = 2
-    }
-  }
+module "application_insights" {
+  source              = "./modules/application_insights"
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+  app_insights_name   = "example-appinsights"
 }
