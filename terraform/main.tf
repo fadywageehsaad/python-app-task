@@ -35,6 +35,8 @@ module "app_service" {
   container_image                 = "${module.container_registry.login_server}/nginx:latest"
   application_insights_key        = module.application_insights.instrumentation_key
   container_registry_login_server = module.container_registry.login_server
+  container_registry_username     = module.container_registry.admin_username
+  container_registry_password     = module.container_registry.admin_password
 }
 
 module "application_gateway" {

@@ -23,7 +23,7 @@ resource "azurerm_app_service" "this" {
   app_settings = {
     "APPINSIGHTS_INSTRUMENTATIONKEY" = var.application_insights_key
     "DOCKER_REGISTRY_SERVER_URL"     = "https://${var.container_registry_login_server}"
-    "DOCKER_REGISTRY_SERVER_USERNAME" = azurerm_container_registry.this.admin_username
-    "DOCKER_REGISTRY_SERVER_PASSWORD" = azurerm_container_registry.this.admin_password
+    "DOCKER_REGISTRY_SERVER_USERNAME" = var.container_registry_username
+    "DOCKER_REGISTRY_SERVER_PASSWORD" = var.container_registry_password
   }
 }

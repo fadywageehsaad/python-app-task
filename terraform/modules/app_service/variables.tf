@@ -32,3 +32,13 @@ variable "container_registry_login_server" {
   description = "The login server of the Azure Container Registry"
   type        = string
 }
+
+variable "container_registry_username" {
+  description = "admin_username of the Azure Container Registry"
+  type        = string
+}
+
+variable "container_registry_password" {
+  description = "password of the Azure Container Registry"
+  type        = string
+}
