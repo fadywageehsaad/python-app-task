@@ -27,13 +27,14 @@ module "container_registry" {
 }
 
 module "app_service" {
-  source              = "./modules/app_service"
-  resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-  app_service_plan_name = "example-appserviceplan"
-  app_service_name    = "example-appservice"
-  container_image     = "${module.container_registry.login_server}/nginx:latest"
-  application_insights_key = module.application_insights.instrumentation_key
+  source                          = "./modules/app_service"
+  resource_group_name             = module.resource_group.name
+  location                        = module.resource_group.location
+  app_service_plan_name           = "example-appserviceplan"
+  app_service_name                = "example-appservice"
+  container_image                 = "${module.container_registry.login_server}/nginx:latest"
+  application_insights_key        = module.application_insights.instrumentation_key
+  container_registry_login_server = module.container_registry.login_server
 }
 
 module "application_gateway" {
