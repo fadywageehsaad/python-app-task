@@ -8,3 +8,5 @@ venv
 ENV
 .git
 .gitignore
+terraform
+.github
