@@ -57,6 +57,7 @@ resource "azurerm_application_gateway" "this" {
     http_listener_name         = "example-http-listener"
     backend_address_pool_name  = "example-backend-pool"
     backend_http_settings_name = "example-backend-http-settings"
+    priority                   = 9
   }
 
   zones = var.zones

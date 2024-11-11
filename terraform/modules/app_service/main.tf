@@ -6,7 +6,7 @@ resource "azurerm_app_service_plan" "this" {
     tier = "Standard"
     size = "S1"
   }
-  zone_redundant = true
+  zone_redundant = false
 }
 
 resource "azurerm_app_service" "this" {
@@ -16,13 +16,13 @@ resource "azurerm_app_service" "this" {
   app_service_plan_id = azurerm_app_service_plan.this.id
 
   site_config {
+    python_version   = "3.4"
     app_command_line = ""
-    linux_fx_version = "DOCKER|${var.container_image}"
   }
 
   app_settings = {
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = var.application_insights_key
-    "DOCKER_REGISTRY_SERVER_URL"     = "https://${var.container_registry_login_server}"
+    "APPINSIGHTS_INSTRUMENTATIONKEY"  = var.application_insights_key
+    "DOCKER_REGISTRY_SERVER_URL"      = "https://${var.container_registry_login_server}"
     "DOCKER_REGISTRY_SERVER_USERNAME" = var.container_registry_username
     "DOCKER_REGISTRY_SERVER_PASSWORD" = var.container_registry_password
   }
