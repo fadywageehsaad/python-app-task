@@ -54,7 +54,7 @@ jobs:
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.AZURE_APP_NAME }}:latest
 
     - name: Log in to Azure
-      uses: azure/login@v1
+      uses: azure/login@v1.4.6
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
