@@ -42,3 +42,8 @@ variable "container_registry_password" {
   description = "password of the Azure Container Registry"
   type        = string
 }
+
+variable "docker_image_name" {
+  description = "Docker image name to be used"
+  type        = string
+}

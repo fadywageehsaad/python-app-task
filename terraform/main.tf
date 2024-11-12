@@ -42,6 +42,7 @@ module "app_service" {
   container_registry_login_server = module.container_registry.login_server
   container_registry_username     = module.container_registry.admin_username
   container_registry_password     = module.container_registry.admin_password
+  docker_image_name               = "exapython-appliaction-mple-appservice:latest"
 }
 
 module "application_gateway" {
@@ -51,7 +52,7 @@ module "application_gateway" {
   subnet_id           = module.virtual_network.subnet_id
   public_ip_name      = "python-application-pip"
   app_gateway_name    = "python-application-appgateway"
-  zones               = ["1"]
+  zones               = ["1"] # it should be ["1", "2", "3"] for high availability
 }
 
 module "application_insights" {

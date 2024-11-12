@@ -1,3 +1,3 @@
 output "app_service_name" {
-  value = azurerm_app_service.this.name
+  value = azurerm_linux_web_app.this.id
 }

@@ -1,29 +1,28 @@
-resource "azurerm_app_service_plan" "this" {
+resource "azurerm_service_plan" "this" {
   name                = var.app_service_plan_name
   location            = var.location
   resource_group_name = var.resource_group_name
-  sku {
-    tier = "Standard"
-    size = "S1"
-  }
-  zone_redundant = false
+  os_type             = "Linux"
+  sku_name            = "S1"
 }
 
-resource "azurerm_app_service" "this" {
+resource "azurerm_linux_web_app" "this" {
   name                = var.app_service_name
   location            = var.location
   resource_group_name = var.resource_group_name
-  app_service_plan_id = azurerm_app_service_plan.this.id
-
-  site_config {
-    python_version   = "3.4"
-    app_command_line = ""
-  }
+  service_plan_id     = azurerm_service_plan.this.id
 
   app_settings = {
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
     "APPINSIGHTS_INSTRUMENTATIONKEY"  = var.application_insights_key
-    "DOCKER_REGISTRY_SERVER_URL"      = "https://${var.container_registry_login_server}"
-    "DOCKER_REGISTRY_SERVER_USERNAME" = var.container_registry_username
-    "DOCKER_REGISTRY_SERVER_PASSWORD" = var.container_registry_password
+  }
+
+  site_config {
+    application_stack {
+      docker_image_name        = var.docker_image_name
+      docker_registry_url      = "https://${var.container_registry_login_server}"
+      docker_registry_username = var.container_registry_username
+      docker_registry_password = var.container_registry_password
+    }
   }
 }
