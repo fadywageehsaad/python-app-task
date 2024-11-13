@@ -80,32 +80,3 @@ resource "azurerm_application_gateway" "this" {
 
   zones = var.zones
 }
-
-resource "azurerm_private_link_service" "example" {
-  name                = "example-privatelink"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-
-  nat_ip_configuration {
-    name      = azurerm_public_ip.this.name
-    primary   = true
-    subnet_id = var.endpoint_subnet_id
-  }
-
-  load_balancer_frontend_ip_configuration_ids = [
-    azurerm_application_gateway.this.frontend_ip_configuration[0].id,
-  ]
-}
-
-resource "azurerm_private_endpoint" "example" {
-  name                = "example-endpoint"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  subnet_id           = var.endpoint_subnet_id
-
-  private_service_connection {
-    name                           = "example-privateserviceconnection"
-    private_connection_resource_id = azurerm_private_link_service.example.id
-    is_manual_connection           = false
-  }
-}

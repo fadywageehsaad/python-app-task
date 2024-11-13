@@ -61,3 +61,17 @@ resource "azurerm_linux_web_app" "this" {
     ]
   }
 }
+
+resource "azurerm_private_endpoint" "example" {
+  name                = "example-endpoint"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  subnet_id           = var.private_endpoint_subnet_id
+
+  private_service_connection {
+    name                           = "example-privateserviceconnection"
+    private_connection_resource_id = azurerm_linux_web_app.this.id
+    subresource_names              = [ "sites" ]
+    is_manual_connection           = false
+  }
+}

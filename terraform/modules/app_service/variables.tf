@@ -58,3 +58,8 @@ variable "container_registry_use_managed_identity" {
   type        = bool
   default     = false
 }
+
+variable "private_endpoint_subnet_id" {
+  description = "private endpoint subnet id"
+  type = string
+}

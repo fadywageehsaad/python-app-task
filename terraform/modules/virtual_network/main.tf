@@ -12,4 +12,6 @@ resource "azurerm_subnet" "this" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [var.subnets[count.index].subnet_prefix]
+  private_endpoint_network_policies = var.subnets[count.index].private_endpoint_network_policies
+  private_link_service_network_policies_enabled = var.subnets[count.index].private_link_service_network_policies_enabled
 }

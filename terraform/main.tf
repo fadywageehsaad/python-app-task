@@ -23,10 +23,15 @@ module "virtual_network" {
     {
       subnet_name       = "example-subnet-1"
       subnet_prefix     = "10.0.1.0/24"
+      private_endpoint_network_policies = "Disabled"
+      private_link_service_network_policies_enabled = false
+      
     },
     {
-      subnet_name       = "example-subnet-2"
-      subnet_prefix     = "10.0.2.0/24"
+      subnet_name                       = "example-subnet-3"
+      subnet_prefix                     = "10.0.2.0/24"
+      private_endpoint_network_policies = "Disabled"
+      private_link_service_network_policies_enabled = false
     }
   ]
 }
@@ -53,6 +58,7 @@ module "app_service" {
   docker_image_name                       = "exapython-appliaction-mple-appservice:latest"
   connection_string                       = module.application_insights.connection_string
   container_registry_use_managed_identity = true
+  private_endpoint_subnet_id              = module.virtual_network.subnets[1]
 }
 
 module "application_gateway" {
@@ -60,7 +66,6 @@ module "application_gateway" {
   resource_group_name     = module.resource_group.name
   location                = module.resource_group.location
   app_gateway_subnet_id   = module.virtual_network.subnets[0]
-  endpoint_subnet_id      = module.virtual_network.subnets[1]
   public_ip_name          = "python-application-pip"
   app_gateway_name        = "python-application-appgateway"
   backend_address         = module.app_service.default_site_hostname

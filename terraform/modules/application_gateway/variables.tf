@@ -13,11 +13,6 @@ variable "app_gateway_subnet_id" {
   type        = string
 }
 
-variable "endpoint_subnet_id" {
-  description = "The ID of the subnet"
-  type        = string
-}
-
 variable "public_ip_name" {
   description = "The name of the public IP"
   type        = string
