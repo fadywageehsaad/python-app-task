@@ -36,7 +36,6 @@ resource "azurerm_linux_web_app" "this" {
       docker_registry_username                = var.container_registry_username
       docker_registry_password                = var.container_registry_password
     }
-    container_registry_use_managed_identity = var.container_registry_use_managed_identity
   }
 
   sticky_settings {

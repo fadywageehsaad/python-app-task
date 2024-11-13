@@ -7,5 +7,5 @@ output "admin_username" {
 }
 
 output "admin_password" {
-  value = azurerm_container_registry.this.admin_username
+  value = azurerm_container_registry.this.admin_password
 }
