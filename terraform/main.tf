@@ -19,8 +19,16 @@ module "virtual_network" {
   location            = module.resource_group.location
   vnet_name           = "python-application-vnet"
   address_space       = ["10.0.0.0/16"]
-  subnet_name         = "example-subnet"
-  subnet_prefixes     = ["10.0.1.0/24"]
+  subnets = [
+    {
+      subnet_name       = "example-subnet-1"
+      subnet_prefix     = "10.0.1.0/24"
+    },
+    {
+      subnet_name       = "example-subnet-2"
+      subnet_prefix     = "10.0.2.0/24"
+    }
+  ]
 }
 
 module "container_registry" {
@@ -32,27 +40,32 @@ module "container_registry" {
 }
 
 module "app_service" {
-  source                          = "./modules/app_service"
-  resource_group_name             = module.resource_group.name
-  location                        = module.resource_group.location
-  app_service_plan_name           = "python-application-appserviceplan2"
-  app_service_name                = "exapython-appliaction-mple-appservice"
-  container_image                 = "${module.container_registry.login_server}/nginx:latest"
-  application_insights_key        = module.application_insights.instrumentation_key
-  container_registry_login_server = module.container_registry.login_server
-  container_registry_username     = module.container_registry.admin_username
-  container_registry_password     = module.container_registry.admin_password
-  docker_image_name               = "exapython-appliaction-mple-appservice:latest"
+  source                                  = "./modules/app_service"
+  resource_group_name                     = module.resource_group.name
+  location                                = module.resource_group.location
+  app_service_plan_name                   = "python-application-appserviceplan2"
+  app_service_name                        = "exapython-appliaction-mple-appservice"
+  container_image                         = "${module.container_registry.login_server}/nginx:latest"
+  application_insights_key                = module.application_insights.instrumentation_key
+  container_registry_login_server         = module.container_registry.login_server
+  container_registry_username             = module.container_registry.admin_username
+  container_registry_password             = module.container_registry.admin_password
+  docker_image_name                       = "exapython-appliaction-mple-appservice:latest"
+  connection_string                       = module.application_insights.connection_string
+  container_registry_use_managed_identity = true
 }
 
 module "application_gateway" {
-  source              = "./modules/application_gateway"
-  resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-  subnet_id           = module.virtual_network.subnet_id
-  public_ip_name      = "python-application-pip"
-  app_gateway_name    = "python-application-appgateway"
-  zones               = ["1"] # it should be ["1", "2", "3"] for high availability
+  source                  = "./modules/application_gateway"
+  resource_group_name     = module.resource_group.name
+  location                = module.resource_group.location
+  app_gateway_subnet_id   = module.virtual_network.subnets[0]
+  endpoint_subnet_id      = module.virtual_network.subnets[1]
+  public_ip_name          = "python-application-pip"
+  app_gateway_name        = "python-application-appgateway"
+  backend_address         = module.app_service.default_site_hostname
+  backend_port            = 80
+  zones                   = ["1"] # it should be ["1", "2", "3"] for high availability
 }
 
 module "application_insights" {

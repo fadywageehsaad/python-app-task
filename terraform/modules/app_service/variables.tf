@@ -47,3 +47,14 @@ variable "docker_image_name" {
   description = "Docker image name to be used"
   type        = string
 }
+
+variable "connection_string" {
+  description = "connection string for app insights"
+  type        = string
+}
+
+variable "container_registry_use_managed_identity" {
+  description = "use managed identity or not"
+  type        = bool
+  default     = false
+}

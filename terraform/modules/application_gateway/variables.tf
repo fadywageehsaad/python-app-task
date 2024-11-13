@@ -8,7 +8,12 @@ variable "location" {
   type        = string
 }
 
-variable "subnet_id" {
+variable "app_gateway_subnet_id" {
+  description = "The ID of the subnet"
+  type        = string
+}
+
+variable "endpoint_subnet_id" {
   description = "The ID of the subnet"
   type        = string
 }
@@ -27,4 +32,14 @@ variable "zones" {
   description = "The availability zones to use"
   type        = list(string)
   default     = ["1", "2", "3"]
+}
+
+variable "backend_address" {
+  description = "backend address"
+  type        = string
+}
+
+variable "backend_port" {
+  description = "backeend port"
+  type        = number
 }
